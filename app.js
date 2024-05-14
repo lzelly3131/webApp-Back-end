@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const router = express.Router();
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -28,12 +29,12 @@ router.use((req, res, next)=>{
   if(req.headers.authorization && req.headers.authorization === 'tds2024'){
     next();
   }else{
-    res.json({'ERROR':'No se encontró una autorización valida'})
+    res.status(401).json({'ERROR':'No se encontró una autorización valida'})
   }
 })
 
 
-
+app.use(cors());
 app.use('/', router);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

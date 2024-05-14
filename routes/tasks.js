@@ -2,8 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 // CREACION DE ARREGLO QUE CONTENDRÁ LOS DATOS
-let tasks = new Array();
-
+let tasks = [{
+    "id":"1",
+    "name":"Tarea de Prueba",
+    "description":"Esta es una tarea de prueba",
+    "dueDate":"02-05-2024"
+}]
 // METODO GET
 router.get('/getTasks', (req, res, next) =>{
     res.json(tasks)
@@ -13,15 +17,15 @@ router.get('/getTasks', (req, res, next) =>{
 router.post('/addTask', function(req, res, next){
 
     let timestamp = Date.now() + Math.random(); // CREACION TEMPORAL DE UN ID
+
     // VALIDACION PARA LOS DATOS DE ENTRADA
     if(req.body && req.body.name && req.body.description && req.body.dueDate){
         req.body.id = timestamp.toString();
         tasks.push(req.body);
+        res.json(tasks);
     }else{
-        res.json([{'ERROR: ':'VERIFIQUE LOS DATOS DE ENTRADA'}])
+        res.status(400).json({});
     }
-
-    res.json(tasks);
 })
 
 // METODO DELETE
@@ -33,12 +37,9 @@ router.delete('/removeTask/:id', function(req, res, next){
         tasks = tasks.filter(task => task.id !== id);
         res.json(tasks);
     }else{
-        res.json([{}]);
+        res.status(400).json({});
     }
 })
-
-
-
 
 
 module.exports = router;

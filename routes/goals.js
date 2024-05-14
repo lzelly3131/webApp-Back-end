@@ -17,11 +17,11 @@ router.post('/addGoal', function(req, res, next){
     if(req.body && req.body.name && req.body.description && req.body.dueDate){
         req.body.id = timestamp.toString();
         goals.push(req.body);
+        res.json(goals);
     }else{
-        res.json([{'ERROR: ':'VERIFIQUE LOS DATOS DE ENTRADA'}])
+        res.status(400).json({});
+        // res.json([{'ERROR: ':'VERIFIQUE LOS DATOS DE ENTRADA'}])
     }
-
-    res.json(goals);
 })
 
 // METODO DELETE
@@ -33,7 +33,8 @@ router.delete('/removeGoal/:id', function(req, res, next){
         goals = goals.filter(task => task.id !== id);
         res.json(goals);
     }else{
-        res.json([{}]);
+        res.status(400).json({});
+        // res.json([{}]);
     }
 })
 
