@@ -5,6 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const router = express.Router();
 var cors = require('cors');
+const mongoose = require('mongoose');
+
+// CREAR CONEXION A LA BD
+mongoose.connect('mongodb://127.0.0.1:27017/todobackend');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
